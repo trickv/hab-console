@@ -3,6 +3,7 @@
 import re
 import time
 import sys
+from texttable import Texttable
 
 log = open("/home/trick/.fldigi/fldigi20190304.log", "r")
 # TODO: if file is quite large, seek to the last few hundred lines or so
@@ -55,10 +56,23 @@ while True:
             pass
 
     # now print all of the output assuming the screen is clear
-    for y in good_data:
-        print(y.group(0))
-        print(y.group("sequence"))
-    print(".")
+    if len(good_data) > 0:
+        table = Texttable()
+        table.set_max_width(0)
+        table.set_deco(Texttable.BORDER | Texttable.HEADER)
+        dict_first_row = good_data[0].groupdict()
+        cols = []
+        for column in dict_first_row.keys():
+            cols.append(column)
+        rows = [cols]
+        for y in good_data:
+            row = []
+            for col in cols:
+                row.append(y.group(col))
+            rows.append(row)
+        table.add_rows(rows)
+        print(table.draw() + "\n")
+        print(".")
     for x in last_matches:
         print(x)
     print("Partial: ", partial)
