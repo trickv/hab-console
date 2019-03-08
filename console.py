@@ -42,13 +42,13 @@ while True:
         if result:
             partial = ""
             #print("MATCH   : ", line)
-            if len(last_matches) > 10:
+            if len(last_matches) > 4:
                 last_matches = last_matches[1:]
             last_matches.append(line)
 
             parse_result = eagle_nofix_sentence.match(result.group("sentence"))
             if parse_result:
-                if len(good_data) > 4:
+                if len(good_data) > 10:
                     good_data = good_data[1:]
                 good_data.append(parse_result)
         else:
