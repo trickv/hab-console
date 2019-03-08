@@ -3,6 +3,7 @@
 import re
 import time
 import sys
+import datetime
 from texttable import Texttable
 
 log = open("/home/trick/.fldigi/fldigi20190304.log", "r")
@@ -21,6 +22,7 @@ def clear_screen():
 good_data = []
 last_matches = []
 partial = ""
+last_rx = None
 
 while True:
     # read some data
@@ -51,6 +53,7 @@ while True:
                 if len(good_data) > 10:
                     good_data = good_data[1:]
                 good_data.append(parse_result)
+                last_rx = datetime.datetime.now()
         else:
             # what to do with non-matching lines?
             pass
@@ -71,8 +74,10 @@ while True:
                 row.append(y.group(col))
             rows.append(row)
         table.add_rows(rows)
-        print(table.draw() + "\n")
-        print(".")
+        print(table.draw())
+        delta = datetime.datetime.now() - last_rx
+        print("Last RX: ", delta)
+        print()
     for x in last_matches:
         print(x)
     print("Partial: ", partial)
