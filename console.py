@@ -76,7 +76,7 @@ while True:
         table.add_rows(rows)
         print(table.draw())
         delta = datetime.datetime.now() - last_rx
-        print("Last RX: ", delta)
+        print("Last RX: ", int(delta.total_seconds()), "s")
         print()
     for x in last_matches:
         print(x)
