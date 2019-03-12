@@ -50,7 +50,7 @@ while True:
 
             parse_result = eagle_nofix_sentence.match(result.group("sentence"))
             if parse_result:
-                if len(good_data) > 10:
+                if len(good_data) > 30:
                     good_data = good_data[1:]
                 good_data.append(parse_result)
                 last_rx = datetime.datetime.now()
